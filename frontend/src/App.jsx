@@ -18,7 +18,7 @@ const App = () => {
         />
         <Route 
           path="/register" 
-          element={<ProtectedRoute element={<Register setUserId={setUserId} setUsername={setUsername} />} authRoute={true} />} 
+          element={<Register />}
         />
 
         <Route 
