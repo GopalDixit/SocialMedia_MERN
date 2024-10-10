@@ -6,7 +6,6 @@ const jwt = require('jsonwebtoken');
 const User = require('./models/users');
 const Post = require('./models/Post');
 const connectDB = require('./Database/db');
-const path = require('path');
 
 const jwtSecret = 'yourSecretKey';
 
@@ -14,11 +13,6 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 connectDB();
-
-app.use(express.static(path.join(__dirname, 'frontend/dist')));
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend/dist', 'index.html'));
-});
 
 // Register user
 app.post('/register', async (req, res) => {
