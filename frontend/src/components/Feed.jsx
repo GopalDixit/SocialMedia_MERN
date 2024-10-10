@@ -43,7 +43,7 @@ const Feed = ({ userId, username, setUserId, setUsername }) => {
 
   const handleSendRequest = async () => {
     try {
-      const response = await fetch('http://localhost:4800/friend-request', {
+      const response = await fetch('https://socialmedia-mern-509c.onrender.com/friend-request', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -67,7 +67,7 @@ const Feed = ({ userId, username, setUserId, setUsername }) => {
 
   const handlePostContent = async () => {
     try {
-      const response = await fetch('http://localhost:4800/post', {
+      const response = await fetch('https://socialmedia-mern-509c.onrender.com/post', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
