@@ -15,7 +15,7 @@ const FriendRequestView = () => {
 
       setLoading(true);
       try {
-        const response = await fetch(`http://localhost:4800/get-friend-requests/${userId}`);
+        const response = await fetch(`https://socialmedia-mern-509c.onrender.com/get-friend-requests/${userId}`);
         const data = await response.json();
         if (response.ok) {
           setFriendRequestView(data.friendRequests || []);
@@ -35,7 +35,7 @@ const FriendRequestView = () => {
 
   const handleRespondRequest = async (fromUserId, status) => {
     try {
-      const response = await fetch('http://localhost:4800/respond-friend-request', {
+      const response = await fetch('https://socialmedia-mern-509c.onrender.com/respond-friend-request', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
