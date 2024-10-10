@@ -16,10 +16,16 @@ const Login = ({ setUserId, setUsername }) => {
         password,
       });
 
-      if (response.data && response.data._id && response.data.username) {
-        setUserId(response.data._id); // Set userId correctly
-        setUsername(response.data.username); // Set the username
-        navigate('/feed');
+      // Correctly store the token from the response
+      localStorage.setItem('token', response.data.token);
+      localStorage.setItem('userId', response.data._id);
+      localStorage.setItem('username', response.data.username);
+      console.log('token is', response.data.token);
+
+      if (response.data && response.data._id && response.data.username && response.data.token) {
+        setUserId(response.data._id); 
+        setUsername(response.data.username); 
+        navigate('/feed'); // Navigate to feed on successful login
       } else {
         setError('Invalid login response');
       }
@@ -27,6 +33,7 @@ const Login = ({ setUserId, setUsername }) => {
       setError(err.response?.data?.message || 'Login failed');
     }
   };
+  
 
   return (
     <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: '#f7f9fc', fontFamily: 'Arial, sans-serif'}}>

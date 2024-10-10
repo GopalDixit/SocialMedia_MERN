@@ -1,24 +1,29 @@
 import React, { useState, useEffect } from 'react';
 
-const FriendRequestView = ({ userId }) => {
-  const [friendRequestView, setFriendRequestView] = useState([]); // Fixed variable naming
+const FriendRequestView = () => {
+  const [friendRequestView, setFriendRequestView] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-
-  console.log('id in view', userId);
+  const userId = localStorage.getItem('userId'); // Fetch userId from localStorage
 
   useEffect(() => {
     const fetchFriendRequestView = async () => {
+      if (!userId) {
+        setError('User ID not found in localStorage.');
+        return;
+      }
+
       setLoading(true);
       try {
         const response = await fetch(`http://localhost:4800/get-friend-requests/${userId}`);
         const data = await response.json();
         if (response.ok) {
-          setFriendRequestView(data.friendRequests || []); // Changed to friendRequests
+          setFriendRequestView(data.friendRequests || []);
         } else {
           setError(data.message || 'Failed to load friend requests.');
         }
       } catch (err) {
+        console.error('Error fetching friend requests:', err);
         setError('Failed to load friend requests.');
       } finally {
         setLoading(false);
@@ -45,7 +50,7 @@ const FriendRequestView = ({ userId }) => {
       if (response.ok) {
         alert(`Friend request ${status}!`);
         // Remove the request from the UI
-        setFriendRequestView(friendRequestView.filter(req => req.fromUser._id !== fromUserId)); // Fixed fromUser check
+        setFriendRequestView(friendRequestView.filter(req => req.fromUser._id !== fromUserId));
       } else {
         alert(data.message || 'Failed to respond to the friend request.');
       }
@@ -65,16 +70,16 @@ const FriendRequestView = ({ userId }) => {
       <ul>
         {friendRequestView.map((request) => (
           <li key={request.fromUser._id}>
-            {request.fromUser.username} {/* Ensure you send the username in the response */}
+            {request.fromUser.username}
             <button
               onClick={() => handleRespondRequest(request.fromUser._id, 'accepted')}
-              className="bg-green-500 text-white py-2 px-4 ml-2 rounded"
+              className="bg-green-500 text-white px-2 py-1 rounded"
             >
               Accept
             </button>
             <button
               onClick={() => handleRespondRequest(request.fromUser._id, 'rejected')}
-              className="bg-red-500 text-white py-2 px-4 ml-2 rounded"
+              className="bg-red-500 text-white px-2 py-1 rounded"
             >
               Reject
             </button>

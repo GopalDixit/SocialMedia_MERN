@@ -2,10 +2,12 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs');
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
 const User = require('./models/users');
 const Post = require('./models/Post');
 const connectDB = require('./Database/db');
 
+const jwtSecret = 'yourSecretKey';
 
 const app = express();
 app.use(bodyParser.json());
@@ -38,7 +40,9 @@ app.post('/login', async (req, res) => {
           return res.status(400).send({ message: 'Invalid username or password' });
       }
 
-      res.send({ _id: user._id, username: user.username });
+      // res.send({ _id: user._id, username: user.username });
+      const token = jwt.sign({ _id: user._id, username: user.username }, jwtSecret, { expiresIn: '1h' });
+      res.json({_id: user._id, username: user.username, token });
   } catch (error) {
       res.status(500).send({ message: 'Server error' });
   }
@@ -230,6 +234,9 @@ app.post('/unlike', async (req, res) => {
     res.status(500).send({ message: 'An error occurred while unliking the post.', error });
   }
 });
+
+
+
 
 const PORT = 4800;
 app.listen(PORT, () => {

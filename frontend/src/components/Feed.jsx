@@ -10,21 +10,34 @@ Modal.setAppElement('#root');
 const Feed = ({ userId, username, setUserId, setUsername }) => {
   const [error, setError] = useState('');
   const [showPopup, setShowPopup] = useState(false);
-  const [showPostPopup, setShowPostPopup] = useState(false); // New state for posting content
+  const [showPostPopup, setShowPostPopup] = useState(false); 
   const [toUsername, setToUsername] = useState('');
-  const [postContent, setPostContent] = useState(''); // State for post content
+  const [postContent, setPostContent] = useState(''); 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (!userId) {
+    const storedUserId = localStorage.getItem('userId');
+    const storedUsername = localStorage.getItem('username');
+  
+    if (storedUserId) {
+      setUserId(storedUserId);
+    }
+    if (storedUsername) {
+      setUsername(storedUsername);
+    } else {
       setError('User ID not found. Please login again.');
     }
-  }, [userId]);
+  }, []);
+  
 
   const handleLogout = () => {
-    setUserId('');
-    setUsername('');
-    navigate('/');
+    const confirmLogout = window.confirm("Are you sure you want to log out?");
+    if (confirmLogout) {
+      localStorage.removeItem('token');
+      setUserId('');
+      setUsername('');
+      navigate('/');
+    }
   };
 
   const handleSendRequest = async () => {
@@ -51,7 +64,6 @@ const Feed = ({ userId, username, setUserId, setUsername }) => {
     }
   };
 
-  // Function to handle posting content
   const handlePostContent = async () => {
     try {
       const response = await fetch('http://localhost:4800/post-content', {
@@ -109,16 +121,14 @@ const Feed = ({ userId, username, setUserId, setUsername }) => {
         </div>
       </nav>
 
-      <div style={{ maxWidth: '800px', margin: '24px auto', padding: '16px', backgroundColor: '#ffffff', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
+      <div style={{ maxWidth: 'full',width:'full', margin: '24px auto', padding: '16px', backgroundColor: '#ffffff', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
         <h1 style={{ fontSize: '24px', marginBottom: '16px', textAlign: 'center', fontWeight: 'bold' }}>{`${username}'s Feed`}</h1>
         {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
         {!error && <PostList userId={userId} />}
 
-        {/* Friend Requests Component */}
         <FriendRequestView userId={userId} />
       </div>
 
-      {/* Friend Request Modal */}
       <Modal
         isOpen={showPopup}
         onRequestClose={() => setShowPopup(false)}
@@ -168,7 +178,6 @@ const Feed = ({ userId, username, setUserId, setUsername }) => {
         </div>
       </Modal>
 
-      {/* Post Content Modal */}
       <Modal
         isOpen={showPostPopup}
         onRequestClose={() => setShowPostPopup(false)}

@@ -1,17 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
-const PostList = ({ userId }) => {
+const PostList = () => {
   const [posts, setPosts] = useState([]);
   const [newComment, setNewComment] = useState({});
   const [error, setError] = useState('');
+  const userId = localStorage.getItem('userId'); // Fetch userId from localStorage
 
   useEffect(() => {
     const fetchPosts = async () => {
+      if (!userId) {
+        setError('User ID not found in localStorage.');
+        return;
+      }
+
       try {
         const response = await axios.get(`http://localhost:4800/feed/${userId}`);
+        console.log('Posts Response:', response.data);
         setPosts(response.data);
       } catch (err) {
+        console.error('Error fetching posts:', err);
         setError('Failed to load posts');
       }
     };
@@ -24,7 +32,6 @@ const PostList = ({ userId }) => {
       const url = hasLiked ? 'http://localhost:4800/unlike' : 'http://localhost:4800/like';
       await axios.post(url, { postId, userId });
 
-      // Update the posts state
       setPosts((prevPosts) =>
         prevPosts.map((post) =>
           post._id === postId
@@ -66,7 +73,7 @@ const PostList = ({ userId }) => {
   };
 
   return (
-    <div style={{ margin: '16px 0' }}>
+    <div style={{ margin: '16px 0'}}>
       {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
       {posts.map((post) => {
         const hasLiked = post.likes.includes(userId);
@@ -109,7 +116,6 @@ const PostList = ({ userId }) => {
                 <p style={{ color: '#777' }}>No comments yet.</p>
               )}
 
-              {/* Add New Comment */}
               <div style={{ display: 'flex', marginTop: '8px' }}>
                 <input
                   type="text"
