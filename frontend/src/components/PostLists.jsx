@@ -10,7 +10,7 @@ const PostList = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       if (!userId) {
-        setError('User ID not found in localStorage.');
+        setError('User ID not found.');
         return;
       }
 
@@ -122,25 +122,12 @@ const PostList = () => {
                   value={newComment[post._id] || ''}
                   onChange={(e) => setNewComment({ ...newComment, [post._id]: e.target.value })}
                   placeholder="Add a comment..."
-                  style={{
-                    flex: 1,
-                    border: '1px solid #ccc',
-                    padding: '8px',
-                    borderRadius: '4px',
-                    marginRight: '8px',
-                  }}
+                  style={{flex: 1,border: '1px solid #ccc',padding: '8px',borderRadius: '4px',marginRight: '8px',}}
                 />
                 <button
                   onClick={() => handleComment(post._id)}
-                  style={{
-                    backgroundColor: '#3182ce',
-                    color: 'white',
-                    padding: '8px 12px',
-                    border: 'none',
-                    borderRadius: '4px',
-                    cursor: 'pointer',
-                    transition: 'background-color 0.3s',
-                  }}
+                  style={{backgroundColor: '#3182ce',color: 'white',padding: '8px 12px',border: 'none',borderRadius: '4px',cursor: 'pointer',transition: 'background-color 0.3s',
+}}
                   onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#2b6cb0')}
                   onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#3182ce')}
                 >

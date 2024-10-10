@@ -1,15 +1,30 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-const PostContent = ({ userId }) => {
+const PostContent = () => {
   const [content, setContent] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [userId, setUserId] = useState(null); 
+
+  useEffect(() => {
+    const storedUserId = localStorage.getItem('userId');
+    if (storedUserId) {
+      setUserId(storedUserId);
+    } else {
+      setError('User not logged in.');
+    }
+  }, []);
 
   const handlePostSubmit = async (e) => {
     e.preventDefault();
 
     if (!content.trim()) {
       setError('Content cannot be empty.');
+      return;
+    }
+
+    if (!userId) {
+      setError('User not logged in.');
       return;
     }
 
@@ -30,15 +45,15 @@ const PostContent = ({ userId }) => {
       if (response.ok) {
         setSuccess('Post created successfully!');
         setContent(''); 
-        setError(''); // Clear previous errors on success
+        setError(''); 
       } else {
         setError(data.message || 'Failed to create post.');
-        setSuccess(''); // Clear success message on error
+        setSuccess(''); 
       }
     } catch (error) {
       console.error('Error creating post:', error);
       setError('An error occurred while creating the post.');
-      setSuccess(''); // Clear success message on error
+      setSuccess(''); 
     }
   };
 

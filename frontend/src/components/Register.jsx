@@ -19,7 +19,7 @@ const Register = () => {
         password,
         fullName,
       });
-      navigate('/'); // Redirect to login page after successful registration
+      navigate('/'); 
     } catch (err) {
       setError(err.response.data.message || 'Registration failed');
     }

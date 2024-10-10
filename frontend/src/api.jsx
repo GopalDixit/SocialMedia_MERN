@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:4800'; // Adjust based on your server URL
+const API_URL = 'http://localhost:4800'; 
 
 export const fetchFeed = (userId) => {
   return axios.get(`${API_URL}/feed/${userId}`);
@@ -20,10 +20,8 @@ export const commentOnPost = async (postId, userId, comment) => {
       userId,
       comment,
     });
-    return response.data; // Return the response data if needed
+    return response.data; 
   } catch (error) {
     throw new Error(error.response.data.message || 'Error commenting on post');
   }
 };
-
-// Add other API methods as needed

@@ -16,7 +16,6 @@ const Login = ({ setUserId, setUsername }) => {
         password,
       });
 
-      // Correctly store the token from the response
       localStorage.setItem('token', response.data.token);
       localStorage.setItem('userId', response.data._id);
       localStorage.setItem('username', response.data.username);
@@ -25,7 +24,7 @@ const Login = ({ setUserId, setUsername }) => {
       if (response.data && response.data._id && response.data.username && response.data.token) {
         setUserId(response.data._id); 
         setUsername(response.data.username); 
-        navigate('/feed'); // Navigate to feed on successful login
+        navigate('/feed'); 
       } else {
         setError('Invalid login response');
       }

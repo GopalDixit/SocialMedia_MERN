@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PostList from './PostLists';
 import FriendRequestView from './FriendRequestView'; 
-import PostContent from './PostContent';
 import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 
@@ -34,6 +33,8 @@ const Feed = ({ userId, username, setUserId, setUsername }) => {
     const confirmLogout = window.confirm("Are you sure you want to log out?");
     if (confirmLogout) {
       localStorage.removeItem('token');
+      localStorage.removeItem('userId');
+      localStorage.removeItem('username');
       setUserId('');
       setUsername('');
       navigate('/');
@@ -66,7 +67,7 @@ const Feed = ({ userId, username, setUserId, setUsername }) => {
 
   const handlePostContent = async () => {
     try {
-      const response = await fetch('http://localhost:4800/post-content', {
+      const response = await fetch('http://localhost:4800/post', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -79,8 +80,8 @@ const Feed = ({ userId, username, setUserId, setUsername }) => {
       const data = await response.json();
       if (response.ok) {
         alert('Post content submitted successfully!');
-        setPostContent(''); // Clear input field
-        setShowPostPopup(false); // Close modal
+        setPostContent(''); 
+        setShowPostPopup(false); 
       } else {
         alert(data.message || 'Failed to post content.');
       }
@@ -111,7 +112,7 @@ const Feed = ({ userId, username, setUserId, setUsername }) => {
             Send Friend Request
           </button>
           <button
-            onClick={() => setShowPostPopup(true)} // Open post content modal
+            onClick={() => setShowPostPopup(true)} 
             style={{ backgroundColor: '#38a169', color: 'white', padding: '10px 16px', borderRadius: '4px', transition: 'background-color 0.3s' }}
             onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = '#2f855a')}
             onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = '#38a169')}
@@ -192,7 +193,7 @@ const Feed = ({ userId, username, setUserId, setUsername }) => {
             height:'400px'
           },
           overlay: {
-            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            backgroundColor: 'rgba(0, 0, 0, 0.75)',
           },
         }}
       >

@@ -3,9 +3,10 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Feed from './components/Feed';
 import Login from './components/Login';
 import Register from './components/Register';
+import ProtectedRoute from './components/ProtectedRoute'; 
 
 const App = () => {
-  const [userId, setUserId] = useState(null); // Store logged-in user ID
+  const [userId, setUserId] = useState(null); 
   const [username, setUsername] = useState('');
 
   return (
@@ -13,20 +14,20 @@ const App = () => {
       <Routes>
         <Route 
           path="/" 
-          element={<Login setUserId={setUserId} setUsername={setUsername} />} 
+          element={<ProtectedRoute element={<Login setUserId={setUserId} setUsername={setUsername} />} authRoute={true} />} 
         />
         <Route 
           path="/register" 
-          element={<Register setUserId={setUserId} setUsername={setUsername} />} 
+          element={<ProtectedRoute element={<Register setUserId={setUserId} setUsername={setUsername} />} authRoute={true} />} 
         />
+
         <Route 
           path="/feed" 
-          element={<Feed userId={userId} username={username} setUserId={setUserId} setUsername={setUsername} />} 
+          element={<ProtectedRoute element={<Feed userId={userId} username={username} setUserId={setUserId} setUsername={setUsername} />} />} 
         />
       </Routes>
     </Router>
   );
-
 };
 
 export default App;

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const connectDB = async () => {
   try {
-    await mongoose.connect('mongodb://localhost:27017/social_media', {
+    await mongoose.connect('mongodb+srv://gopaldixit9450:N4tEEMO3UwssJiYP@admincluster.rgu9w.mongodb.net/social_media?retryWrites=true&w=majority&appName=admincluster', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });

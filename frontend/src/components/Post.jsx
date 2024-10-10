@@ -1,4 +1,3 @@
-// src/components/Post.jsx
 import React, { useState } from 'react';
 import { commentOnPost } from '../api'; 
 
@@ -10,7 +9,7 @@ const Post = ({ post, userId }) => {
     try {
       const response = await commentOnPost(post._id, userId, comment);
       console.log('Comment added:', response);
-      setComment(''); // Clear the comment input
+      setComment('');
     } catch (error) {
       console.error(error.message);
     }

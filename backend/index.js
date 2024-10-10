@@ -158,20 +158,17 @@ app.get('/feed/:userId', async (req, res) => {
       return res.status(404).send({ message: 'User not found' });
     }
 
-    // Get the IDs of user's friends
     const friendIds = user.friends.map(friend => friend._id);
 
-    // Fetch posts where:
-    // 1. The post is created by the user or a friend
-    // 2. A friend has commented on the post
+
     const posts = await Post.find({
       $or: [
         { userId: { $in: [userId, ...friendIds] } },
         { 'comments.userId': { $in: friendIds } }
       ]
     })
-      .populate('userId', 'username') // Populating user details for the post
-      .populate('comments.userId', 'username'); // Populating user details for the comments
+      .populate('userId', 'username') 
+      .populate('comments.userId', 'username'); 
 
     res.status(200).send(posts);
   } catch (error) {
