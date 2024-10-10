@@ -29,7 +29,7 @@ const PostContent = () => {
     }
 
     try {
-      const response = await fetch('http://localhost:4800/post', {
+      const response = await fetch('https://socialmedia-mern-509c.onrender.com/post', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
