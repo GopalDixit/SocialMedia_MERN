@@ -70,7 +70,13 @@ const Login = ({ setUserId, setUsername }) => {
           </button>
         </form>
         <p style={{marginTop: '15px', color: '#555'}}>
-          Don't have an account? <a href="/register" style={{color: '#007bff', textDecoration: 'none'}}>Register</a>
+          Don't have an account?
+          <button 
+            onClick={() => navigate('/register')} // Navigates to Register page
+            style={{color: '#007bff', background: 'none', border: 'none', cursor: 'pointer',fontSize:'16px'}}
+          >
+            Register
+          </button>
         </p>
       </div>
     </div>
