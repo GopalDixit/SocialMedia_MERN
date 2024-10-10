@@ -5,7 +5,7 @@ const PostList = () => {
   const [posts, setPosts] = useState([]);
   const [newComment, setNewComment] = useState({});
   const [error, setError] = useState('');
-  const userId = localStorage.getItem('userId'); // Fetch userId from localStorage
+  const userId = localStorage.getItem('userId'); 
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -15,7 +15,7 @@ const PostList = () => {
       }
 
       try {
-        const response = await axios.get(`http://localhost:4800/feed/${userId}`);
+        const response = await axios.get(`https://socialmedia-mern-509c.onrender.com/feed/${userId}`);
         console.log('Posts Response:', response.data);
         setPosts(response.data);
       } catch (err) {
@@ -29,7 +29,7 @@ const PostList = () => {
 
   const handleLikeToggle = async (postId, hasLiked) => {
     try {
-      const url = hasLiked ? 'http://localhost:4800/unlike' : 'http://localhost:4800/like';
+      const url = hasLiked ? 'https://socialmedia-mern-509c.onrender.com/unlike' : 'https://socialmedia-mern-509c.onrender.com/like';
       await axios.post(url, { postId, userId });
 
       setPosts((prevPosts) =>
@@ -53,7 +53,7 @@ const PostList = () => {
     if (!newComment[postId]) return;
 
     try {
-      await axios.post('http://localhost:4800/comment', {
+      await axios.post('https://socialmedia-mern-509c.onrender.com/comment', {
         postId,
         userId,
         comment: newComment[postId],
@@ -66,7 +66,7 @@ const PostList = () => {
             : post
         )
       );
-      setNewComment({ ...newComment, [postId]: '' }); // Reset comment input
+      setNewComment({ ...newComment, [postId]: '' }); 
     } catch (err) {
       setError('Error adding comment');
     }
@@ -103,7 +103,6 @@ const PostList = () => {
               </button>
             </div>
 
-            {/* Comments */}
             <div style={{ marginTop: '16px' }}>
               <h3 style={{ margin: '0 0 8px', fontSize: '16px', color: '#333' }}>Comments</h3>
               {post.comments.length > 0 ? (
