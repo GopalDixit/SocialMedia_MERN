@@ -14,6 +14,11 @@ app.use(bodyParser.json());
 app.use(cors());
 connectDB();
 
+app.use(express.static(path.join(__dirname, 'frontend/dist')));
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend/dist', 'index.html'));
+});
+
 // Register user
 app.post('/register', async (req, res) => {
   const { username, email, password, fullName } = req.body;
