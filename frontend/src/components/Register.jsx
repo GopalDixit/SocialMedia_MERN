@@ -13,7 +13,7 @@ const Register = () => {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:4800/register', {
+      await axios.post('https://socialmedia-mern-509c.onrender.com/register', {
         username,
         email,
         password,
