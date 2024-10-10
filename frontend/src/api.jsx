@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:4800'; 
+const API_URL = 'https://socialmedia-mern-509c.onrender.com'; 
 
 export const fetchFeed = (userId) => {
   return axios.get(`${API_URL}/feed/${userId}`);
