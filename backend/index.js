@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken');
 const User = require('./models/users');
 const Post = require('./models/Post');
 const connectDB = require('./Database/db');
+const path = require('path');
 
 const jwtSecret = 'yourSecretKey';
 
