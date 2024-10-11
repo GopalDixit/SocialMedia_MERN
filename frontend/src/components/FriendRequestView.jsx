@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-const FriendRequestView = ({ refreshRequests }) => {
+const FriendRequestView = () => {
   const [friendRequestView, setFriendRequestView] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
@@ -9,7 +9,7 @@ const FriendRequestView = ({ refreshRequests }) => {
   useEffect(() => {
     const fetchFriendRequestView = async () => {
       if (!userId) {
-        setError('User ID not found in localStorage.');
+        setError('User ID not found.');
         return;
       }
 
@@ -31,7 +31,7 @@ const FriendRequestView = ({ refreshRequests }) => {
     };
 
     fetchFriendRequestView();
-  }, [userId,refreshRequests]);
+  }, [userId]);
 
   const handleRespondRequest = async (fromUserId, status) => {
     try {
