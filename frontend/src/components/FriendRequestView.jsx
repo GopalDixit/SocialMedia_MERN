@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
-const FriendRequestView = () => {
+const FriendRequestView = ({ refreshRequests }) => {
   const [friendRequestView, setFriendRequestView] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
-  const userId = localStorage.getItem('userId'); // Fetch userId from localStorage
+  const userId = localStorage.getItem('userId'); 
 
   useEffect(() => {
     const fetchFriendRequestView = async () => {
@@ -31,7 +31,7 @@ const FriendRequestView = () => {
     };
 
     fetchFriendRequestView();
-  }, [userId]);
+  }, [userId,refreshRequests]);
 
   const handleRespondRequest = async (fromUserId, status) => {
     try {
