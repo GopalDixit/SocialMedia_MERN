@@ -17,7 +17,7 @@ const PostList = () => {
       try {
         const response = await axios.get(`https://socialmedia-mern-509c.onrender.com/feed/${userId}`);
         console.log('Posts Response:', response.data);
-        setPosts(response.data);
+        setPosts(response.data.reverse());
       } catch (err) {
         console.error('Error fetching posts:', err);
         setError('Failed to load posts');
