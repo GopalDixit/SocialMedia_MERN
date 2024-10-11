@@ -12,7 +12,6 @@ const Feed = ({ userId, username, setUserId, setUsername }) => {
   const [showPostPopup, setShowPostPopup] = useState(false); 
   const [toUsername, setToUsername] = useState('');
   const [postContent, setPostContent] = useState(''); 
-  const [refreshRequests, setRefreshRequests] = useState(false);
 
   const navigate = useNavigate();
 
@@ -59,7 +58,6 @@ const Feed = ({ userId, username, setUserId, setUsername }) => {
       if (response.ok) {
         alert('Friend request sent successfully!');
         setShowPopup(false);
-        setRefreshRequests((prev) => !prev); // Trigger refresh of friend requests
       } else {
         alert(data.message || 'Failed to send friend request.');
       }
@@ -126,7 +124,7 @@ const Feed = ({ userId, username, setUserId, setUsername }) => {
       </nav>
 
       <div style={{ maxWidth: 'full',width:'full', margin: '24px auto', padding: '16px', backgroundColor: '#ffffff', borderRadius: '8px', boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)' }}>
-        <FriendRequestView userId={userId} refreshRequests={refreshRequests} />
+        <FriendRequestView userId={userId} />
         <h1 style={{ fontSize: '24px', marginBottom: '16px', textAlign: 'center', fontWeight: 'bold' }}>{`${username}'s Feed`}</h1>
         {error && <p style={{ color: 'red', textAlign: 'center' }}>{error}</p>}
         {!error && <PostList userId={userId} />}
